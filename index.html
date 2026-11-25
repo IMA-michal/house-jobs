@@ -312,7 +312,7 @@ textarea.copy{min-height:280px;font-size:16px}
   'use strict';
 
   var KEY = 'houseJobs.v1';
-  var BUILD = '2026-11-25a';       // changed on every publish, so the board can tell a newer one is out
+  var BUILD = '2026-11-25b';       // changed on every publish, so the board can tell a newer one is out
   var UNDO_MS = 2 * 60 * 1000;     // how long a tap can be taken back from the board
   var GRACE_HOUR = 10;             // last week's zones can still be ticked until Monday 10:00
   // One-off later deadlines, by the week's Monday. 5 to 11 Oct: the whole house was away together.
@@ -441,7 +441,7 @@ textarea.copy{min-height:280px;font-size:16px}
       zones: houseZones(),
       // rot.zones[i] = who has zone i in the anchor week; everyone moves on one each Monday.
       // With more people than zones, whoever has no zone that week is captain.
-      rot: { anchor: DEAL_WEEK, zones: ['p1', 'p5', 'p2', 'p3'], captain: 'p4' },
+      rot: { anchor: DEAL_WEEK, zones: ['p2', 'p5', 'p1', 'p3'], captain: 'p4' },
       layout: 10,
       penalty: 1,          // minus for each zone task not ticked by Sunday night
       penMode: 'task',
@@ -697,7 +697,8 @@ textarea.copy{min-height:280px;font-size:16px}
       // 25 Nov: the dishwasher is back after the break (Michal). The drying rack drops to 1 point,
       // emptying the dishwasher pays 2, and filling and turning it on comes in at 2. The board starts
       // fresh for everyone, the way Start again does it, and the week's roles are dealt anew:
-      // captain Eoin, kitchen Michal, hallway Max, living room Ciaran, dining room Brodie.
+      // captain Eoin, kitchen Ciaran, hallway Max, living room Michal, dining room Brodie
+      // (Michal and Ciaran swapped from the first deal, 25 Nov).
       var rack = S.jobs.filter(function (j) { return /drying rack/i.test(j.name); })[0];
       if (rack) rack.pts = 1;
       var emptyJob = S.jobs.filter(function (j) { return /dishwasher/i.test(j.name) && /empt/i.test(j.name); })[0];
@@ -719,7 +720,7 @@ textarea.copy{min-height:280px;font-size:16px}
       S.start = dayKey(now);
       var byName = {};
       activePeople().forEach(function (p) { byName[p.name.trim().toLowerCase()] = p.id; });
-      var owners = ['michal', 'max', 'ciaran', 'brodie'].map(function (n) { return byName[n]; });
+      var owners = ['ciaran', 'max', 'michal', 'brodie'].map(function (n) { return byName[n]; });
       if (byName.eoin && S.zones.length === 4 && owners.every(Boolean)) {
         S.rot = { anchor: DEAL_WEEK, zones: owners, captain: byName.eoin };
       } else {
